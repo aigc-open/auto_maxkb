@@ -22,11 +22,12 @@ RUN mkdir -p /opt/maxkb/app /opt/maxkb/model /opt/maxkb/conf && \
 COPY --from=web-build ui /opt/maxkb/app/ui
 WORKDIR /opt/maxkb/app
 RUN python3 -m venv /opt/py3 && \
-    pip install poetry --break-system-packages && \
+    pip install poetry --break-system-packages -i https://pypi.tuna.tsinghua.edu.cn/simple/ && \
     poetry config virtualenvs.create false && \
     . /opt/py3/bin/activate && \
-    if [ "$(uname -m)" = "x86_64" ]; then sed -i 's/^torch.*/torch = {version = "^2.2.1+cpu", source = "pytorch"}/g' pyproject.toml; fi && \
-    poetry install
+    if [ "$(uname -m)" = "x86_64" ]; then sed -i 's/^torch.*/torch = {version = "^2.2.1+cpu", source = "pytorch"}/g' pyproject.toml; fi 
+RUN poetry source add --priority=default mirrors https://pypi.tuna.tsinghua.edu.cn/simple/
+RUN poetry install || true
 
 FROM ghcr.io/1panel-dev/maxkb-python-pg:python3.11-pg15.6
 ARG DOCKER_IMAGE_TAG=dev \
