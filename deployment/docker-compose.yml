@@ -6,15 +6,6 @@ services:
     ports:
       - 18080:8080
     volumes:
-      - ./volumes/maxkb:/var/lib/postgresql/data
-      - ../apps:/opt/maxkb/app/apps
-      - ../installer:/opt/maxkb/app/installer
-      - ../data:/opt/maxkb/app/data
-    environment:
-      - DEFAULT_YAOWEN_MODELS=Qwen-三小文本大模型
+      - ../volumes/maxkb:/var/lib/postgresql/data
+      - /root/share_models/local_embedding/:/opt/maxkb/model/local_embedding/
     privileged: true
-    command: ["/usr/bin/run-maxkb.sh"]
-  # redis:
-  #   image: harbor.uat.enflame.cc/yaowen/redis:7-alpine
-  #   command:
-  #     - redis-server
