@@ -21,9 +21,9 @@ RUN mkdir -p /opt/maxkb/app /opt/maxkb/model /opt/maxkb/conf && \
 
 COPY --from=web-build ui /opt/maxkb/app/ui
 WORKDIR /opt/maxkb/app
-RUN apt install -y python3-xyz
+
 RUN python3 -m venv /opt/py3 && \
-    pip install poetry -i https://pypi.tuna.tsinghua.edu.cn/simple/ && \
+    pip install poetry && \
     poetry config virtualenvs.create false && \
     . /opt/py3/bin/activate && \
     if [ "$(uname -m)" = "x86_64" ]; then sed -i 's/^torch.*/torch = {version = "^2.2.1+cpu", source = "pytorch"}/g' pyproject.toml; fi 
