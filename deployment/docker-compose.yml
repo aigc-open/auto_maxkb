@@ -1,0 +1,20 @@
+version: '3'
+services:
+  maxkb:
+    image: harbor.uat.enflame.cc/library/enflame.cn/maxkb:1.2
+    container_name: maxkb
+    ports:
+      - 18080:8080
+    volumes:
+      - ./volumes/maxkb:/var/lib/postgresql/data
+      - ../apps:/opt/maxkb/app/apps
+      - ../installer:/opt/maxkb/app/installer
+      - ../data:/opt/maxkb/app/data
+    environment:
+      - DEFAULT_YAOWEN_MODELS=Qwen-三小文本大模型
+    privileged: true
+    command: ["/usr/bin/run-maxkb.sh"]
+  # redis:
+  #   image: harbor.uat.enflame.cc/yaowen/redis:7-alpine
+  #   command:
+  #     - redis-server
