@@ -1,7 +1,7 @@
 version: '3'
 services:
   maxkb:
-    image: harbor.uat.enflame.cc/library/enflame.cn/maxkb:1.2
+    image: registry.cn-shanghai.aliyuncs.com/zhph-server/auto_maxkb:1.0
     container_name: maxkb
     ports:
       - 18080:8080
